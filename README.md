@@ -1,4 +1,4 @@
-![cf](https://i.imgur.com/7v5ASc8.png) lab 16 express authorization
+![cf](https://i.imgur.com/7v5ASc8.png) lab 16 express basic authorization
 ======
 
 # To Submit this Assignment
@@ -14,7 +14,7 @@
 * include an .eslintrc
 * use a .env file **but do not include it**
 * include a .gitignore
- * **add the string `db` to your getignore**
+ * **add the string `db` to your gitignore**
  * **add the string `.env` to your gitignore**
 * include a readme with a project description and route docs
 
@@ -31,22 +31,22 @@
  * The user must have a unique username and findhash
  * the user must have an email
  * The user must never store the password as plain text (hash the password)
- * The user must have a method for genorating a token from the findHash
+ * The user must have a method for generating a token from the findHash
 * Create a Basic Auth Middleware for parsing basic auth headers
 * use the `body-parser` express middleware to on `POST` and `PUT` routes
 * use the npm `debug` module to log the functions being executed in your app
 * using the express `Router` create an auth router with routes for **signup** and **signin**
 * Your server should depend on the environment variables
- * `DEBUG` - for turing on logging
+ * `DEBUG` - for turning on logging
  * `APP_SECRET` - for signing and verify tokens
  * `PORT` - for setting the port your server will listen on
- * `MONGODB_URI` - for setting the URI that mongoose will conect to
+ * `MONGODB_URI` - for setting the URI that mongoose will connect to
 
 ## Server Endpoints
 ### `/api/signup`
 * `POST` request
- * the client should pass the username and passord in the body of the request
- * the server should respond with a token genoratorated using jsonwebtoken and the users findHash
+ * the client should pass the username and password in the body of the request
+ * the server should respond with a token generated using jsonwebtoken and the users findHash
  * the server should respond with a 400 Bad Request to failed request
 
 ### `/api/signin`
