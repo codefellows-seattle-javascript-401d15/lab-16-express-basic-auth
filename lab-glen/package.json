@@ -1,0 +1,11 @@
+{
+  "name": "lab-glen",
+  "version": "1.0.0",
+  "description": "![cf](https://i.imgur.com/7v5ASc8.png) lab 16 express basic authorization ======",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC"
+}
