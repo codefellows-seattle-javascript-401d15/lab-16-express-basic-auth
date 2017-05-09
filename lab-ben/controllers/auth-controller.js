@@ -8,7 +8,8 @@ module.exports = exports = {};
 exports.signup = function(user, password) {
   debug('Signup');
 
-  return user.generatePasswordHash(password).save()
+  return user.generatePasswordHash(password)
+  .then(user => user.save())
   .then(user.generateToken())
   .catch(err => err);
 };
