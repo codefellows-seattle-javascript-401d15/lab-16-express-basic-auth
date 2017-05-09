@@ -10,9 +10,9 @@ const bodyParser = require('body-parser').json();
 const authRoutes = require('./routes/auth-routes');
 const mongoose = require('mongoose');
 
-const app = express();
+const app = module.exports = express();
 const router = express.Router();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/cfgram-dev';
 
 mongoose.Promise = Promise;
