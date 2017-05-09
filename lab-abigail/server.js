@@ -7,14 +7,14 @@ const cors = require('cors');
 const debug = require('debug')('cfgram:server');
 const Promise = require('bluebird');
 const errorHandler = require('./lib/error-middleware');
-const authRoutes = require('./routes/auth-routes');
+const authRoutes = require('./route/auth-routes');
 const bodyParser = require('body-parser').json();
 const mongoose = require('mongoose');
 
 const app = express();
 const router = express.Router();
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/cfgram-dev';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/cfgramDev';
 
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
@@ -22,6 +22,6 @@ mongoose.connect(MONGODB_URI);
 app.use(errorHandler);
 app.use(cors());
 app.use(bodyParser);
-app.user('/api', authRoutes(router));
+app.use('/api', authRoutes(router));
 
-app.listener(PORT, () => console.log(`Listening on ${PORT}`));
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));

@@ -10,20 +10,21 @@ const debug = require('debug')('cfgram:user-model');
 
 const Schema = mongoose.Schema;
 
-const userSchema = Schema ({
+const userSchema = Schema({
   username: {type: String, required: true, unique: true},
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true},
-  findHash: {type: String, unique: true},
+  findhash: {type: String, unique: true},
 });
 
-userSchema.methods.genertePasswordHash = function(password) {
+userSchema.methods.generatePasswordHash = function(password) {
   debug('#generatePasswordHash');
 
   return new Promise((resolve, reject) => {
     bcrypt.hash(password, 10, (err, hash) => {
-      if(err) return reject(createError(401, 'Passwork hashing failed'));
+      if(err) return reject(createError(401, 'Password hashing failed'));
       this.password = hash;
+      console.log('password hashed', hash);
       resolve(this);
     });
   });
@@ -47,25 +48,23 @@ userSchema.methods.generateFindHash = function() {
 
   return new Promise((resolve, reject) => {
     let tries = 0;
-
     let _generateFindHash = () => {
       this.findHash = crypto.randomBytes(32).toString('hex');
       this.save()
-      .then( () => resolve(this.findHash))
+      .then(() => resolve(this.findHash))
       .catch(err => {
-        console.log(err);
         if(tries > 3) return reject(createError(401, 'Generate findhash failed'));
         tries++;
         _generateFindHash();
       });
     };
+
     _generateFindHash();
   });
 };
 
 userSchema.methods.generateToken = function() {
   debug('#generateToken');
-
   return new Promise((resolve, reject) => {
     console.log(process.env.APP_SECRET);
     this.generateFindHash()
@@ -76,6 +75,5 @@ userSchema.methods.generateToken = function() {
     });
   });
 };
-
 
 module.exports = mongoose.model('user', userSchema);
