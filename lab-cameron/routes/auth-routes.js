@@ -3,6 +3,7 @@
 const debug = require('debug')('pokegram:auth-routes');
 const basicAuth = require('../lib/basic-auth-middleware');
 const User = require('../models/user');
+const authController = require('../controllers/auth-controller');
 
 module.exports = function(router) {
   router.post('/signup', (req, res) => {

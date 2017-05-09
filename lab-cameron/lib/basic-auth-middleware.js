@@ -10,7 +10,7 @@ module.exports = function(req, res, next) {
   if (!authHeaders) return next(createError(401, 'authorization headers required'));
 
   let base64Str = authHeaders.split('Basic ')[1];
-  if (base64Str) return next(createError(401, 'username and password required'));
+  if (!base64Str) return next(createError(401, 'username and password required'));
 
   let [username, password] = new Buffer(base64Str, 'base64').toString().split(':');
   req.auth = {username, password};
