@@ -17,12 +17,24 @@ const userSchema = Schema({
   findhash: {type: String, unique: true},
 });
 
+userSchema.methods.generatePasswordHash = function(password){
+  debug('#generatePasswordHash');
+
+  return new Promise((resolve, reject) => {
+    bcrypt.hash(password, 10, (err, hash) =>{
+      if(err) return reject (createError(401, 'Password hashing failed'));
+      this.password = hash;
+      resolve(this);
+    });
+  });
+};
+
 userSchema.methods.comparePasswordHash = function(password){
   debug('#comparePasswordHash');
 
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, this.password, (err, valid) =>{
-      if(err) return reject (createError(401, 'Password validation failed'));
+      if(err) return reject(createError(401, 'Password validation failed'));
       if(!valid) return reject(createError(401, 'Wrong Password'));
 
       resolve(this);
@@ -39,8 +51,7 @@ userSchema.methods.generateFindHash = function(){
       this.findHash = crypto.randomBytes(32).toString('hex');
       this.save()
       .then(() => resolve(this.findHash))
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
         if(tries > 3) return reject (createError(401, 'Generate findhash failed'));
         tries++;
         _generateFindHash();
