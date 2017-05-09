@@ -14,12 +14,11 @@ const userSchema = Schema({
   username: {type: String, required: true, unique: true},
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true},
-  findhash: {type: String, unique: true},
+  findHash: {type: String, unique: true},
 });
 
 userSchema.methods.generatePasswordHash = function(password) {
   debug('#generatePasswordHash');
-  
   return new Promise((resolve, reject) => {
     bcrypt.hash(password, 10, (err, hash) => {
       if(err) return reject(createError(401, 'Password hashing failed'));
@@ -31,7 +30,7 @@ userSchema.methods.generatePasswordHash = function(password) {
 
 userSchema.methods.comparePasswordHash = function(password) {
   debug('#comparePasswordHash');
-  
+
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, this.password, (err, valid) => {
       if(err) return reject(createError(401, 'Password validation failed'));
@@ -51,6 +50,7 @@ userSchema.methods.generateFindHash = function() {
       this.save()
       .then(() => resolve(this.findHash))
       .catch(err => {
+        console.log(err);
         if(tries > 3) return reject(createError(401, 'Generate hash failed'));
         tries++;
         _generateFindHash();
@@ -60,7 +60,7 @@ userSchema.methods.generateFindHash = function() {
   });
 };
 
-userSchema.method.generateToken = function() {
+userSchema.methods.generateToken = function() {
   debug('#generateToken');
   
   return new Promise((resolve, reject) => {
@@ -69,7 +69,7 @@ userSchema.method.generateToken = function() {
     .then(findHash => resolve(jwt.sign({token: findHash}, process.env.APP_SECRET)))
     .catch(err => {
       console.log(err);
-      reject(createError(401, 'Generate token failed'));
+      return reject(createError(401, 'Generate token failed'));
     });
   });
 };
