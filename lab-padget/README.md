@@ -19,11 +19,21 @@ Please visit the following pages for how to install your project locally.
 * [NPM Docs](https://docs.npmjs.com)
 * [NPM package.json](https://docs.npmjs.com/files/package.json)
 
+### MongoDB
+* [Install MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/)
+* [The MongoDB 3.4 Manual](https://docs.mongodb.com/manual/#getting-started)
+```db install
+brew update
+brew install mongodb
+mongod --dbpath ./db
+```
+
 ### JSON Configuration
 Initializing package.json
 ```npm install
 npm init
-npm install -D mocha chai
+npm install -D chai chai-http coveralls istanbul mocha mocha-lcov-reporter
+npm install -S bcrypt bluebird body-parser cors crypto debug dotenv express http-errors jsonwebtoken mongoose morgan
 ```
 
 ```scripts
@@ -63,17 +73,40 @@ The result of installation above.
     "mocha-lcov-reporter": "^1.3.0"
   }
 ```
-* `node index.js`
+
+## Application
+
+Run server:
+```server
+node server.js
+```
+
+For post:
+```post
+http POST :3000/api/signup
+```
+
+To find database:
+```db
+db.users.find()
+```
+
+To empty database:
+```db
+db.users.drop()
+```
 
 ## Running Tests
 In [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) (Terminal) enter the command:
 
 ```testing
 npm run test
+npm run debug
 ```
 
 ## Resources
 
+* [MongoDB](https://docs.mongodb.com)
 * [Node Assert](https://nodejs.org/api/assert.html)
 * [Chai Expect](http://chaijs.com/api/bdd/)
 * [Chai Assertion Styles](http://chaijs.com/guide/styles/#expect)
