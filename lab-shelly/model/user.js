@@ -15,7 +15,6 @@ const userSchema = Schema({
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true},
   findHash: {type: String, unique: true},
-  // findhash: {type: String, unique: true},
 });
 
 userSchema.methods.generatePasswordHash = function(password) {
@@ -41,7 +40,6 @@ userSchema.methods.comparePasswordHash = function(password) {
 
       resolve(this);
     });
-
   });
 };
 
@@ -57,13 +55,10 @@ userSchema.methods.generateFindHash = function() {
       .then(() => resolve(this.findHash))
       .catch(err => {
         if (tries > 3) return reject(createError(401, 'Generate findhash failed'));
-        // if(tries > 3) return reject(err);
         tries ++;
         _generateFindHash;
-
       });
     };
-
     _generateFindHash();
   });
 };
@@ -72,9 +67,7 @@ userSchema.methods.generateToken = function() {
   debug('#generateToken');
 
   return new Promise((resolve, reject) => {
-
-    console.log(process.env.APP_SECRET);
-
+    // console.log(process.env.APP_SECRET);
     this.generateFindHash()
     .then(findHash => resolve(jwt.sign({token: findHash}, process.env.APP_SECRET)))
     .catch(err => {

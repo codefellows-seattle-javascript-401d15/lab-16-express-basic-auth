@@ -1,7 +1,7 @@
 ![cf](https://i.imgur.com/7v5ASc8.png) lab 16 express basic authorization
 ======
 
-# To Submit this Assignment
+# Overview
   * fork this repository
   * write all of your code in a directory named `lab-` + `<your name>` **e.g.** `lab-duncan`
   * push to your repository
@@ -9,7 +9,7 @@
   * submit a link to your PR in canvas
   * write a question and observation on canvas
 
-# Build Tool Instructions
+# Directions
 * create a package.json that lists all dependencies and developer dependencies
 * include an .eslintrc
 * use a .env file **but do not include it**
@@ -19,14 +19,8 @@
 * include a readme with a project description and route docs
 
 # Directions
-* Create these directories to organize your code:
- * db - use the command `mongod --dbpath ./db` to start mongod using this directory
- * lib
- * model
- * route
- * test
-* Create a HTTP Server using `express`
-* Use the `http-errors` npm  module with the new`error-response` middleware from lecture
+
+* Created a HTTP Server using `express`
 * Create a **User Model** using mongoose with the properties `username`, `password`, and `findHash`
  * The user must have a unique username and findhash
  * the user must have an email

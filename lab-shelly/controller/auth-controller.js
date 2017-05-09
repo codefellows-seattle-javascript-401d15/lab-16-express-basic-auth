@@ -3,12 +3,11 @@
 const Promise = require('bluebird');
 const createError = require('http-errors');
 const User = require('../model/user');
-// const error = require('../lib/error-middleware');
 
 module.exports = exports = {};
 
 exports.createAccount = function(user, password) {
-
+  
   if(!user.username) return Promise.reject(createError(400, 'username required'));
   if(!password) return Promise.reject(createError(400, 'password required'));
   if(!user.email) return Promise.reject(createError(400, 'email required'));
