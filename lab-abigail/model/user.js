@@ -53,6 +53,7 @@ userSchema.methods.generateFindHash = function() {
       this.save()
       .then(() => resolve(this.findHash))
       .catch(err => {
+        console.log(err);
         if(tries > 3) return reject(createError(401, 'Generate findhash failed'));
         tries++;
         _generateFindHash();
