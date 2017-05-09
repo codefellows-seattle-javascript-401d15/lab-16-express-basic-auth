@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js"
+    "start": "node server.js",
+    "debug": "DEBUG=cfgram* nodemon server.js"
   },
   "keywords": [
     "authorization",
