@@ -1,8 +1,8 @@
 'use strict';
 
 const debug = require('debug')('cfgram:auth-routes');
-const basicAuth = require('basic-auth-middleware');
-const user = require('./user');
+const basicAuth = require('../lib/basic-auth-middleware');
+const User = require('../models/user');
 
 module.exports = function(router) {
   router.post('/signup', (req, res) => {
@@ -14,20 +14,20 @@ module.exports = function(router) {
 
     let newUser = new User(req.body);
 
-    newUser.generatePasswordhash(tempPassword)
+    return newUser.generatePasswordHash(tempPassword)
     .then(user => user.save())
     .then(user => user.generateToken())
     .then(token => res.json(token))
-    .catch(err => res.send(err));
+    .catch(err => res.status(err.status).send(err));
   });
 
-  router.get('/signin', (req, res) => {
+  router.get('/signin', basicAuth, (req, res) => {
     debug('#GET /signin');
 
-    User.findOne({username: req.auth.username})
+    return User.findOne({username: req.auth.username})
     .then(user => user.comparePasswordHash(req.auth.password))
     .then(user => user.generateToken())
-    .then(token => res.jon(token))
+    .then(token => res.json(token))
     .catch(err => res.status(err.status).send(err));
   });
   return router;

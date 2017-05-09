@@ -1,18 +1,19 @@
 'use strict';
-// TODO: Demo code review
+
+require('dotenv').load();
+
 const express = require('express');
 const cors = require('cors');
-const debug = require('debug')('cfgram:server');
 const Promise = require('bluebird');
+const errorHandler = require('./lib/error-middleware');
 const bodyParser = require('body-parser').json();
-const authRoutes = require('auth-routes');
+const authRoutes = require('./routes/auth-routes');
 const mongoose = require('mongoose');
 
 const app = express();
 const router = express.Router();
-const PORT =
-
-mongoose.Promise = Promise_URI = porcess.env.MONGODB_URI||'mongodb://localhost/cfgram-dev';
+const PORT = process.env.PORT || 4000;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/cfgram-dev';
 
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
@@ -20,6 +21,6 @@ mongoose.connect(MONGODB_URI);
 app.use(errorHandler);
 app.use(cors());
 app.use(bodyParser);
-app.use('/api', require('./routes/auth-routes'));
+app.use('/api', authRoutes(router));
 
-app.listen(PORT, () => )
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));

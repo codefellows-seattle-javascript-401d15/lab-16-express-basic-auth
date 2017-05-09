@@ -12,8 +12,8 @@ const Schema = mongoose.Schema;
 
 const userSchema = Schema({
   username: {type: String, required: true, unique: true},
-  password: {type: String, required: true, unique: true},
-  email: {type: String, required: true},
+  email: {type: String, required: true, unique: true},
+  password: {type: String, required: true},
   findhash: {type: String, unique: true},
 });
 
@@ -68,7 +68,10 @@ userSchema.methods.generateToken = function() {
   return new Promise((resolve, reject) => {
     this.generateFindHash()
     .then(findHash => resolve(jwt.sign({token: findHash}, process.env.APP_SECRET)))
-    .catch(err => reject(err));
+    .catch(err => {
+      console.error(err);
+      reject(createError(401, 'Generate token failed'));
+    });
   });
 };
 
