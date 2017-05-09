@@ -3,12 +3,10 @@
 const Promise = require('bluebird');
 const createError = require('http-errors');
 const User = require('../model/user');
-// const debug = require('debug')('cfgram:auth-routes');
 
 module.exports = exports = {};
 
 exports.createItem = function(req, res, user) {
-  console.log('in controller');
 
   if(!user) return Promise.reject(createError(400, 'bad request'));
 
@@ -19,11 +17,9 @@ exports.createItem = function(req, res, user) {
   let newUser = new User(req.body);
 
   return newUser.generatePasswordHash(tempPassword)
-  .then(console.log('in controller return'))
   .then(user => user.save())
   .then(user => user.generateToken())
   .then(token => res.json(token))
-  // .then(token => res.send(token))
   .catch(err => {
     console.log(err);
   });
