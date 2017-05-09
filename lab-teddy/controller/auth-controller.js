@@ -1,11 +1,11 @@
 'use strict';
 
 const debug = require('debug')('cfgram:auth-controller');
-const User = require('../module/user');
+const User = require('../model/user');
 
 module.exports = exports = {};
 
-exports.module.createNewUser = function(req, res){
+exports.createNewUser = function(req, res){
   debug('#createNewUser');
 
   let tempPassword = req.body.password;
@@ -21,7 +21,7 @@ exports.module.createNewUser = function(req, res){
   .catch(err => res.status(err.status).send(err));
 };
 
-exports.module.getNewUser = function(req, res){
+exports.getNewUser = function(req, res){
   debug('#getNewUser');
 
   return User.findOne({username: req.auth.username})
