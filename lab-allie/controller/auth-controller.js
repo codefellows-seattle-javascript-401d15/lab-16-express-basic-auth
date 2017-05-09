@@ -21,8 +21,8 @@ exports.signUp = function(req, res) {
     return user.generateToken();
   })
   .then(token => {
-    console.log('made it to token');
-    res.json(token)
+    // console.log('made it to token');
+    res.json(token);
   })
   .catch(err => {
     console.error(err);
@@ -30,9 +30,9 @@ exports.signUp = function(req, res) {
   });
 };
 
-exports.signIn = function(req, res) {
-  return User.findOne({username: req.auth.username})
-  .then(user => user.comparePasswordHash(req.auth.password))
+exports.signIn = function(reqAuth, res) {
+  return User.findOne({username: reqAuth.username})
+  .then(user => user.comparePasswordHash(reqAuth.password))
   .then(user => user.generateToken())
   .then(token => res.json(token))
   .catch(err => res.status(err.status).send(err));

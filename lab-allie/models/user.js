@@ -23,6 +23,7 @@ userSchema.methods.generatePasswordHash = function(password) {
     bcrypt.hash(password, 10, (err, hash) => {
       if(err) return reject(createError(401, 'Password hashing failed'));
       this.password = hash;
+      console.log(hash, ' hashed the password');
       resolve(this);
     });
   });
@@ -30,7 +31,7 @@ userSchema.methods.generatePasswordHash = function(password) {
 
 userSchema.methods.comparePasswordHash = function(password) {
   debug('#comparePasswordHash');
-
+  console.log('in compare password hash');
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, this.password, (err, valid) => {
       if(err) return reject(createError(401, 'Password validation failed'));
@@ -42,7 +43,7 @@ userSchema.methods.comparePasswordHash = function(password) {
 
 userSchema.methods.generateFindHash = function() {
   debug('#generateFindHash');
-  
+  console.log('in generatefindhash');
   return new Promise((resolve, reject) => {
     let tries = 0;
     let _generateFindHash = () => {
@@ -64,9 +65,10 @@ userSchema.methods.generateToken = function() {
   debug('#generateToken');
   
   return new Promise((resolve, reject) => {
-    console.log('secret', process.env.APP_SECRET);
+    // console.log('secret', process.env.APP_SECRET);
     this.generateFindHash()
     .then(findHash => resolve(jwt.sign({token: findHash}, process.env.APP_SECRET)))
+    .then(token => console.log('token', token))
     .catch(err => {
       console.log(err);
       return reject(createError(401, 'Generate token failed'));
