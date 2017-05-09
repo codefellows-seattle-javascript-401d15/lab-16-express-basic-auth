@@ -19,7 +19,6 @@ describe('Server module tests', () => {
     User.remove({});
     done();
   });
-
   describe('POST method', () => {
     describe('request made to /api/signup endpoint', () => {
       describe('a properly formatted request', () => {

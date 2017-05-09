@@ -9,9 +9,7 @@ const errorHandler = require('./lib/error-middleware');
 const authRoutes = require('./routes/auth-routes');
 const bodyParser = require('body-parser').json();
 const mongoose = require('mongoose');
-// const debug = require('debug')('cfgram:server');
 
-// const app = express();
 const app = module.exports = express();
 const router = express.Router();
 const PORT = process.env.PORT || 3000;
