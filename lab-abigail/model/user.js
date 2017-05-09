@@ -14,7 +14,7 @@ const userSchema = Schema({
   username: {type: String, required: true, unique: true},
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true},
-  findhash: {type: String, unique: true},
+  findHash: {type: String, unique: true},
 });
 
 userSchema.methods.generatePasswordHash = function(password) {
@@ -54,7 +54,7 @@ userSchema.methods.generateFindHash = function() {
       .then(() => resolve(this.findHash))
       .catch(err => {
         console.log(err);
-        if(tries > 3) return reject(createError(401, 'Generate findhash failed'));
+        if(tries > 3) return reject(createError(401, 'Generate findHash failed'));
         tries++;
         _generateFindHash();
       });
