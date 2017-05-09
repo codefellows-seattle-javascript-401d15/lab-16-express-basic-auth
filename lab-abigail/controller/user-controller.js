@@ -35,7 +35,7 @@ exports.fetchItem = function(res, reqAuth) {
 
   return User.findOne({username: reqAuth.username})
   .then(user => user.comparePasswordHash(reqAuth.password))
-  .then(user => Promise.resolve(user.generateToken()))
+  .then(user => user.generateToken())
   .then(data => res.json(data))
   .catch(err => Promise.reject(err));
 };
