@@ -48,8 +48,8 @@ userSchema.methods.generateFindHash = function() {
   return new Promise((resolve, reject) => {
     let tries = 0;
     let _generatefindHash = () => {
-      this.findHash = crypto.randomBytes(32).toString('hex');
-      this.save();
+      this.findHash = crypto.randomBytes(32).toString('hex')
+      this.save()
       .then(() => resolve(this.findHash))
       .catch(err => {
         if(tries > 3) return reject(createError(401, 'generate findhash failed'));
@@ -66,7 +66,7 @@ userSchema.methods.generateToken =function() {
   debug('#generateToken');
   return new Promise((resolve, reject) => {
     console.log(process.env.APP_SECRET);
-    this.generateFindHash();
+    this.generateFindHash()
     .then(findHash => resolve(jwt.sign({token: findHash}, process.env.APP_SECRET)))
     .catch(err => {
       console.log(err);

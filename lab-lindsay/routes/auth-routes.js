@@ -12,9 +12,9 @@ module.exports = function(router) {
     req.body.password = null;
     delete req.body.password;
 
-    let newUsesr = new User(req.body);
+    let newUser = new User(req.body);
 
-    return newUser.generatePasswordHash(tempPassword);
+    return newUser.generatePasswordHash(tempPassword)
     .then(user => user.save())
     .then(user => user.generateToken())
     .then(token => res.json(token))
@@ -24,7 +24,7 @@ module.exports = function(router) {
   router.get('/signin', basicAuth, (req, res) => {
     debug('GET /signin');
 
-    return User.findOne({username: req.auth.username});
+    return User.findOne({username: req.auth.username})
     .then(user => user.comparePasswordHash(req.auth.password))
     .then(user => user.generateToken())
     .then(token => res.json(token))
