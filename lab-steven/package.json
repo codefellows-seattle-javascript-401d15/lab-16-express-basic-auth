@@ -30,6 +30,7 @@
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "crypto": "0.0.3",
+    "debug": "^2.6.6",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "http-errors": "^1.6.1",
