@@ -34,13 +34,14 @@ userSchema.methods.comparePasswordHash = function(password) {
   debug('#comparePasswordHash');
 
   return new Promise((resolve, reject) => {
-    bcrypt.compare(password, this.password, (err, valid) => {
 
+    bcrypt.compare(password, this.password, (err, valid) => {
       if(err) return reject(createError(401, 'Password validation failed'));
       if(!valid) return reject(createError(401, 'Wrong password'));
 
       resolve(this);
     });
+
   });
 };
 
@@ -55,7 +56,6 @@ userSchema.methods.generateFindHash = function() {
       this.save()
       .then(() => resolve(this.findHash))
       .catch(err => {
-
         if (tries > 3) return reject(createError(401, 'Generate findhash failed'));
         // if(tries > 3) return reject(err);
         tries ++;
@@ -72,7 +72,7 @@ userSchema.methods.generateToken = function() {
   debug('#generateToken');
 
   return new Promise((resolve, reject) => {
-    
+
     console.log(process.env.APP_SECRET);
 
     this.generateFindHash()

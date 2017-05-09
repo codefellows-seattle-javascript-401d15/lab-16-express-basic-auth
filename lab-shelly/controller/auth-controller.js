@@ -7,7 +7,6 @@ const User = require('../model/user');
 
 module.exports = exports = {};
 
-//POST
 exports.createAccount = function(user, password) {
 
   if(!user.username) return Promise.reject(createError(400, 'username required'));
@@ -15,17 +14,15 @@ exports.createAccount = function(user, password) {
   if(!user.email) return Promise.reject(createError(400, 'email required'));
 
   let newUser = new User(user);
-  console.log('new user???', newUser);
   return newUser.generatePasswordHash(password)
   .then(user => user.save())
   .then(user => user.generateToken());
 
-
 };
 
-
-//GET
-exports.fetchAccount = function() {
-
+exports.fetchAccount = function(checkUser) {
+  return User.findOne({username: checkUser.username})
+  .then(user => user.comparePasswordHash(checkUser.password))
+  .then(user => user.generateToken());
 
 };

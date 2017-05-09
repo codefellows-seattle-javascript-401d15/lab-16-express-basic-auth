@@ -5,7 +5,7 @@ const createError = require('http-errors');
 
 module.exports = function(req, res, next) {
   debug('#basic-auth-middleware');
-
+  
   let authHeaders = req.headers.authorization;
 
   if(!authHeaders) return next(createError(401, 'Authorization headers required'));
