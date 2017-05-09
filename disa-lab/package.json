@@ -1,0 +1,19 @@
+{
+  "name": "disa-lab",
+  "version": "1.0.0",
+  "description": "lab \u001b[D\u001b[D\u001b[D\u001b[Dj\u001b[CJS 401 Lab 16",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justdisa"
+  },
+  "keywords": [
+    "lab",
+    "javascript"
+  ],
+  "author": "justdisa",
+  "license": "MIT"
+}
