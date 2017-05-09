@@ -1,0 +1,44 @@
+{
+  "name": "lab-ben",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BAyzenberg/lab-16-express-basic-auth.git"
+  },
+  "keywords": [
+    "auth"
+  ],
+  "author": "Ben Ayzenberg",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BAyzenberg/lab-16-express-basic-auth/issues"
+  },
+  "homepage": "https://github.com/BAyzenberg/lab-16-express-basic-auth#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "coveralls": "^2.13.1",
+    "mocha": "^3.3.0"
+  },
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.1",
+    "cors": "^2.8.3",
+    "crypto": "0.0.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "http-errors": "^1.6.1",
+    "jsonwebtoken": "^7.4.0",
+    "mongoose": "^4.9.8",
+    "morgan": "^1.8.1"
+  }
+}
