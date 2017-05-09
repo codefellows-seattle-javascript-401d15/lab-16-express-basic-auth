@@ -18,7 +18,7 @@ describe('server module', function() {
       .post('/user')
       .send({ username: 'testUser', password: 'wordpass', email:'test@test.com' })
       .end((err, res) => {
-        console.log('Running POST test', res);
+        console.log('Running POST test', res.body);
         let user = JSON.parse(res.body);
         users.push(user);
         expect(res.status).to.equal(200);
