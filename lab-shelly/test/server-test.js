@@ -4,6 +4,7 @@ const server = require('../server');
 const chai = require('chai');
 const http = require('chai-http');
 const expect = require('chai').expect;
+const User = require('../model/user');
 
 chai.use(http);
 
@@ -15,9 +16,10 @@ describe('Server module tests', () => {
   });
   after(done => {
     app.close();
+    User.remove({});
     done();
   });
-// ====POST====
+
   describe('POST method', () => {
     describe('request made to /api/signup endpoint', () => {
       describe('a properly formatted request', () => {
@@ -124,7 +126,7 @@ describe('Server module tests', () => {
           });
         });
       });
-      
+
     });
   });
 });
