@@ -117,14 +117,14 @@ describe('Server module tests', () => {
         it('should return a 404 error for unregistered route', done => {
           chai.request(server)
           .get('/api/logmein')
-          .auth('Zach', 'wrongpassword')
+          .auth('Zach', 'wrongloginroute')
           .end((err, res) => {
             expect(res).to.have.status(404);
             done();
           });
         });
       });
-
+      
     });
   });
 });
