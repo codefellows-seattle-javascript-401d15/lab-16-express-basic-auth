@@ -13,6 +13,7 @@ module.exports = function(done) {
   }).save()
   .then(gallery => {
     this.tempGallery = gallery;
+    console.log(`gallery : ${gallery}`);
     done();
   })
   .catch(done);
