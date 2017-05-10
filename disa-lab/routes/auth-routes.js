@@ -8,27 +8,18 @@ module.exports = function(router) {
   router.post('/signup', (req, res) => {
     debug('POST /signup');//debug is "superdope" =D
       //hashtag is just a flag saying you're inside the thing
-    let tempPassword = req.body.password; //storing temp password
-    req.body.password = null; //
-    delete req.body.password;//
-
-    let newUser = new User(req.body);
-
-    return newUser.generatePasswordHash(tempPassword)
-    .then(user => user.save())
-    .then(user => user.generateToken())
-    .then(token => res.json(token))//changes to json format
-    .catch(err => res.status(err.status).send(err));
+//stuff goes here
+    return authController.createNewUser(req.body)
+    .then(token => res.json(token))
+    .catch(err => res.status(400).send(err));
   });
 
   router.get('/signin', basicAuth, (req, res) => {
     debug('GET /signin');
 
-    return User.findOne({username: req.auth.username})
-    .then(user => user.comparePasswordHash(req.auth.password))
-    .then(user => user.generateToken())
+    return authController.authenticateUser(req.auth)
     .then(token => res.json(token))
-    .catch(err => res.status(err.status).send(err));
+    .catch(err => res.status(401).send(err));
   });
   return router;
 };

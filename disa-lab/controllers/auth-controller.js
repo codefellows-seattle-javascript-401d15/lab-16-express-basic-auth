@@ -25,8 +25,8 @@ exports.authenticateUser = function(auth) {
   debug('authenticateUser');
 
   return User.findOne({username: auth.username})
-  .then()
-  .then()
-  .then()
-  .catch()
+  .then(user => user.comparePasswordHash(auth.password))
+  .then(user => user.generateToken())
+  .then(token => Promise.resolve(token))
+  .catch(err => Promise.reject(err));
 }
