@@ -15,10 +15,11 @@ describe('Server module tests', () => {
     done();
   });
   after(done => {
+    // User.remove({});
     app.close();
-    User.remove({});
     done();
   });
+
   describe('POST method', () => {
     describe('request made to /api/signup endpoint', () => {
       describe('a properly formatted request', () => {
@@ -63,7 +64,6 @@ describe('Server module tests', () => {
 
     });
   });
-
 // ====GET====
   describe('GET method', () => {
     before(done => {
