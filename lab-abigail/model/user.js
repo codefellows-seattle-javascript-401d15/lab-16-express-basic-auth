@@ -24,7 +24,6 @@ userSchema.methods.generatePasswordHash = function(password) {
     bcrypt.hash(password, 10, (err, hash) => {
       if(err) return reject(createError(401, 'Password hashing failed'));
       this.password = hash;
-      console.log('password hashed', hash);
       resolve(this);
     });
   });
