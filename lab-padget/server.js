@@ -1,7 +1,5 @@
 'use strict';
 
-// REVIEW: We're using dotenv to load the env variables in the machine environment
-// DO NOT FORGET to add .env to your .gitignore
 require('dotenv').load();
 
 const express = require('express');
@@ -14,7 +12,7 @@ const authRoutes = require('./routes/auth-routes');
 const bodyParser = require('body-parser').json();
 const mongoose = require('mongoose');
 
-const app = express();
+const app = module.exports = express();
 const router = express.Router();
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/cfgram-dev';

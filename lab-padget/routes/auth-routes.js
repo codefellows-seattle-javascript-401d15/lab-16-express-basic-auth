@@ -17,9 +17,9 @@ module.exports = function(router) {
     return newUser.generatePasswordHash(tempPassword)
     .then(user => user.save())
     .then(user => user.generateToken())
-    // Put above in controller.
     .then(token => res.json(token))
-    .catch(err => res.status(err.status).send(err));
+    // .catch(err => res.status(err.status).send(err));
+    .catch(err => res.status(400).send(err));
   });
 
   router.get('/signin', basicAuth, (req, res) => {
