@@ -13,4 +13,20 @@ exports.createNewUser = function(body) {
   delete body.password;
 
   let newUser = new User(body);
+
+  return newUser.generatePasswordHash(tempPassword)
+  .then(user => user.save())
+  .then(user => user.generateToken())
+  .then(token => Promise.resolve(token))
+  .catch(err => Promise.reject(err));
 };
+
+exports.authenticateUser = function(auth) {
+  debug('authenticateUser');
+
+  return User.findOne({username: auth.username})
+  .then()
+  .then()
+  .then()
+  .catch()
+}
