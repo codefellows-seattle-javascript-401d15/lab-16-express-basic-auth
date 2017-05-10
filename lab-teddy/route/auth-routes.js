@@ -12,7 +12,7 @@ module.exports = function(router) {
 
   router.get('/signin', basicAuth, (req, res) => {
     debug('GET /signin');
-    authControl.getNewUser(res, req.auth);
+    authControl.getNewUser(req.auth, res);
   });
   return router;
 };
