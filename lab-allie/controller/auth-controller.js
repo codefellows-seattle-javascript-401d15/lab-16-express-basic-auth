@@ -11,17 +11,14 @@ exports.signUp = function(req, res) {
   req.body.password = null;
   delete req.body.password;
   
-  // console.log('req.body', req.body);
   let newUser = new User(req.body);
 
   return newUser.generatePasswordHash(tempPassword)
   .then(user => user.save())
   .then(user => {
-    // console.log('user', user);
     return user.generateToken();
   })
   .then(token => {
-    // console.log('made it to token');
     res.json(token);
   })
   .catch(err => {
