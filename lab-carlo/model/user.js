@@ -47,7 +47,10 @@ userSchema.methods.generateFindHash = function() {
 
   return new Promise((resolve, reject) => {
     let tries = 0;
-    let _generateFindHash = () => {
+
+    _generateFindHash.call(this);
+
+    function _generateFindHash() {
       this.findHash = crypto.randomBytes(32).toString('hex');
       this.save()
       .then(() => resolve(this.findHash))
@@ -57,16 +60,15 @@ userSchema.methods.generateFindHash = function() {
         tries++;
         _generateFindHash();
       });
-    };
-
-    _generateFindHash();
+    }
   });
 };
 
 userSchema.methods.generateToken = function() {
   debug('#generateToken');
+
   return new Promise((resolve, reject) => {
-    console.log(process.env.APP_SECRET);
+    console.log(process.env.MONGODB_URI);
     this.generateFindHash()
       .then(findHash => resolve(jwt.sign({token: findHash}, process.env.APP_SECRET)))
       .catch(err => {
