@@ -12,7 +12,7 @@ galleryCtrl.create = function(body, user) {
   body.userId = user._id;
   return new Gallery(body).save()
   .then(gallery => gallery)
-  .catch(err => createError(400, 'Bad request yo'));
+  .catch(err => createError(400, console.error(err)));
 };
 
 galleryCtrl.fetchGallery = function(id) {
@@ -20,5 +20,5 @@ galleryCtrl.fetchGallery = function(id) {
 
   return Gallery.findById(id)
   .then(gallery => gallery)
-  .catch(err => createError(404, 'Not found'));
+  .catch(err => createError(404, console.error(err)));
 };
