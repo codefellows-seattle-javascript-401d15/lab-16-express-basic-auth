@@ -64,8 +64,8 @@ describe('Gallery Routes', function() {
         expect(res.body.desc).to.equal(exampleGallery.desc);
         expect(res.body.userId).to.equal(this.tempUser._id.toString());
         expect(date).to.not.equal('Invalid Date');
-        done();
       });
+      done();
     });
 
     it('should return a status 200', (done) => {
@@ -186,8 +186,8 @@ describe('Gallery Routes', function() {
         expect(res.body.userId).to.equal(this.tempUser._id.toString());
         expect(date).to.not.equal('Invalid Date');
         expect(res.status).to.equal(200);
-        done();
       });
+      done();
     });
   });
 
@@ -258,14 +258,11 @@ describe('Gallery Routes', function() {
     });
 
     it('should update a gallery and return status 200', done => {
-      console.log(this.tempGallery);
-      console.log(this.tempGallery._id);
       superagent.put(`${url}/api/gallery/${this.tempGallery._id}`)
       .send({name: 'changed',
         desc: 'shitty gallery'})
       .set({Authorization: `Bearer ${this.tempToken}`})
       .end((err, res) => {
-        console.log(this.tempGallery);
         if (err)
           return done(err);
         expect(this.tempGallery.name).to.equal('shitty gallery');

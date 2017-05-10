@@ -10,7 +10,6 @@ const errorHandler = require('./lib/error-middleware');
 const bodyParser = require('body-parser').json();
 const mongoose = require('mongoose');
 
-
 const authRoutes = require('./routes/auth-routes');
 const galleryRoutes = require('./routes/gallery-routes');
 
