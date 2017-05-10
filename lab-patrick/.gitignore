@@ -1,8 +1,7 @@
-# ignore db directorys
-db
 
-# ignore env
-env
+db/
+
+.env
 # Created by https://www.gitignore.io/api/osx,linux,node,vim
 
 ### OSX ###

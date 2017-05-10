@@ -15,9 +15,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
-    "bcrypt": "^1.0.2",
+    "bcrypt": "^1.0.1",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
