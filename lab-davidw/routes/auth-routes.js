@@ -9,7 +9,7 @@ module.exports = function(router) {
   router.post('/signup', (req, res) => {
     debug('#POST /signup');
     userCtrl.createUser(req, res)
-    .then(() => res.send('user created'))
+    .then((user) => res.send(user))
     .catch((err) => res.send(err.message));
   });
 

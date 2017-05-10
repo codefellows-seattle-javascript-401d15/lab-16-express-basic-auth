@@ -23,7 +23,7 @@ exports.createUser = function(req, res) {
   .then(user => user.generateToken())
   .then(token => res.json(token))
   .catch(err => {
-    console.error(err);
+    res.send(err);
   });
 };
 
