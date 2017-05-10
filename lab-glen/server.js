@@ -7,10 +7,12 @@ const cors = require('cors');
 const debug = require('debug')('cfgram:server');
 const Promise = require('bluebird');
 const errorHandler = require('./lib/error-middleware');
-const authRoutes = require('./routes/auth-routes');
 const bodyParser = require('body-parser').json();
 const mongoose = require('mongoose');
-const morgan = require('morgan');
+
+
+const authRoutes = require('./routes/auth-routes');
+const galleryRoutes = require('./routes/gallery-routes');
 
 const app = express();
 const router= express.Router();
@@ -23,7 +25,9 @@ mongoose.connect(MONGODB_URI);
 app.use(cors());
 app.use(errorHandler);
 app.use(bodyParser);
+
 app.use('/api', authRoutes(router));
+app.use('/api', galleryRoutes(router));
 
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 server.isRunning = true;

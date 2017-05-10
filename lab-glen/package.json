@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha",
-    "debug" : "node --debug server.js"
+    "debug": "DEBUG=cfgram* nodemon server.js",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
