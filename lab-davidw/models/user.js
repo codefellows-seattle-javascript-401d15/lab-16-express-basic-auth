@@ -24,6 +24,7 @@ userSchema.methods.generatePasswordHash = function(password) {
     bcrypt.hash(password, 10, (err, hash) =>{
       if(err) return reject(err);
       this.hash = hash;
+
       resolve(this);
     });
   });
@@ -48,7 +49,7 @@ userSchema.methods.generateFindHash = function() {
   return new Promise((resolve, reject) => {
     let tries = 0;
     let _generateFindHash = () => {
-      this.findhash = crypto.randomBytes(32).toString('hex');
+      this.findHash = crypto.randomBytes(32).toString('hex');
       this.save()
       .then(() => resolve(this.findHash))
       .catch(err => {

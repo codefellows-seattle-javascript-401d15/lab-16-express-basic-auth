@@ -1,3 +1,4 @@
+
 'use strict';
 
 const debug = require('debug')('cfgram:basic-auth-middleware');
@@ -10,7 +11,7 @@ module.exports = function(req, res, next) {
   if(!authHeaders) return next(createError(401, 'Authorization headers required'));
 
   let base64Str = authHeaders.split('Basic ')[1];
-  if(!base64Str) return next(createError(401, 'Username and Password required'));
+  if(!base64Str) return next(createError(401, 'Username and password required'));
 
   let [username, password] = new Buffer(base64Str, 'base64').toString().split(':');
   req.auth = {username, password};

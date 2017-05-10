@@ -8,10 +8,9 @@ mongoose.Promise = Promise;
 
 module.exports = exports = {};
 
-exports.createUser = function(req, res, user) {
-  // console.log('HERE IS MY REQUEST', req.body);
+exports.createUser = function(req, res) {
 
-  if(!user)return Promise.reject(createError(400, 'bad request'));
+  if(!req)return Promise.reject(createError(400, 'bad request'));
 
   let tempPassword = req.body.password;
   req.body.password = null;
@@ -24,12 +23,12 @@ exports.createUser = function(req, res, user) {
   .then(user => user.generateToken())
   .then(token => res.json(token))
   .catch(err => {
-    console.log(err);
+    console.error(err);
   });
 };
 
 exports.fetchUser = function(res, reqAuth) {
-  if(!reqAuth) return Promise.reject(createError(400, 'bad request, id required'));
+  if(!reqAuth) return Promise.reject(createError(404, 'not found'));
 
   return User.findOne({username: reqAuth.username})
   .then(user => user.comparePasswordHash(reqAuth.password))
