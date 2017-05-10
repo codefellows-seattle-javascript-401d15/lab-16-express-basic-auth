@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "chai": "^3.5.0",
+    "jsonwebtoken": "^7.4.0",
     "mocha": "^3.3.0"
   },
   "dependencies": {
@@ -21,6 +22,5 @@
     "dotenv": "^4.0.0",
     "jade": "^1.11.0",
     "morgan": "^1.8.1"
-
   }
 }
