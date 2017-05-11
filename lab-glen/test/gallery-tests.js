@@ -44,12 +44,16 @@ describe('Gallery Routes', function() {
       .then(user => user.save())
       .then(user => {
         this.tempUser = user;
-        console.log('temp user', this.tempUser);
         return user.generateToken();
       }).then(token => {
         this.tempToken = token;
         done();
       }).catch(() => done());
+    });
+
+    after((done) => {
+      delete exampleGallery.userId;
+      done();
     });
 
     it('should return a gallery', done => {
@@ -118,14 +122,14 @@ describe('Gallery Routes', function() {
       });
       done();
     });
-
   });
 
   describe('###GET### /api/gallery/:id', () => {
     before(done => {
       new User(exampleUser)
       .generatePasswordHash(exampleUser.password)
-      .then(user => user.save()).then(user => {
+      .then(user => user.save())
+      .then(user => {
         this.tempUser = user;
         return user.generateToken();
       }).then(token => {
@@ -144,8 +148,9 @@ describe('Gallery Routes', function() {
       .catch(() => done());
     });
 
-    after(() => {
+    after((done) => {
       delete exampleGallery.userId;
+      done();
     });
 
     it('should return a status 404 for invalid route', done => {
@@ -193,10 +198,14 @@ describe('Gallery Routes', function() {
 
   describe('###PUT### /api/gallery', function() {
     before(done => {
+      console.log('making new user');
       new User(exampleUser)
       .generatePasswordHash(exampleUser.password)
-      .then(user => user.save()).then(user => {
+      .then(user => user.save())
+      .then(user => {
+        console.log(user);
         this.tempUser = user;
+        console.log('this.tempuser ' + this.tempUser);
         return user.generateToken();
       }).then(token => {
         this.tempToken = token;
@@ -204,7 +213,13 @@ describe('Gallery Routes', function() {
       }).catch(() => done());
     });
 
+
+
     before(done => {
+      console.log('this.TEMPUSER ' + this.tempUser);
+      console.log('examplegallery.userid ' + exampleGallery.userId);
+      console.log('making new gallery');
+      console.log('EXAMPLE GALLERY' + exampleGallery);
       exampleGallery.userId = this.tempUser._id.toString();
       new Gallery(exampleGallery).save()
       .then(gallery => {
@@ -216,6 +231,7 @@ describe('Gallery Routes', function() {
 
     after(() => {
       delete exampleGallery.userId;
+
     });
 
     it('should return a status 404 for invalid route', done => {
@@ -263,9 +279,9 @@ describe('Gallery Routes', function() {
         desc: 'shitty gallery'})
       .set({Authorization: `Bearer ${this.tempToken}`})
       .end((err, res) => {
-        if (err)
-          return done(err);
-        expect(this.tempGallery.name).to.equal('shitty gallery');
+        if (err) return done(err);
+        expect(res.body.desc).to.equal('shitty gallery');
+        expect(res.body.name).to.equal('changed');
         expect(res.status).to.equal(200);
       });
       done();
@@ -283,7 +299,8 @@ describe('Gallery Routes', function() {
       }).then(token => {
         this.tempToken = token;
         done();
-      }).catch(() => done());
+      })
+      .catch(() => done());
     });
 
     before(done => {
@@ -296,35 +313,35 @@ describe('Gallery Routes', function() {
       .catch(() => done());
     });
 
-    after(() => {
+    after((done) => {
       delete exampleGallery.userId;
-    });
-
-    it('should delete a gallery and return status 204', done => {
-      superagent.delete(`${url}/api/gallery/${this.tempGallery._id}`)
-      .set({Authorization: `Bearer ${this.tempToken}`})
-      .end((err, res) => {
-        if (err)
-          return done(err);
-        expect(res.status).to.equal(204);
-      });
       done();
-    });
 
-    it('should return a status 404 for invalid route', done => {
-      superagent.delete(`WRONG URL`)
-      .set({
-        Authorization: `Bearer ${this.tempToken}`,
-      })
-      .end((err, res) => {
-        if(err) console.error(err.message);
-        expect(res.status).to.equal(404);
+      it('should delete a gallery and return status 204', done => {
+        superagent.delete(`${url}/api/gallery/${this.tempGallery._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if (err)
+            return done(err);
+          expect(res.status).to.equal(204);
+        });
+        done();
       });
-      done();
-    });
 
-    it('should return a status 401 UNAUTHORIZED for bad token', done => {
-      superagent.delete(`${url}/api/gallery/${this.tempGallery._id}`)
+      it('should return a status 404 for invalid route', done => {
+        superagent.delete(`WRONG URL`)
+        .set({
+          Authorization: `Bearer ${this.tempToken}`,
+        })
+        .end((err, res) => {
+          if(err) console.error(err.message);
+          expect(res.status).to.equal(404);
+        });
+        done();
+      });
+
+      it('should return a status 401 UNAUTHORIZED for bad token', done => {
+        superagent.delete(`${url}/api/gallery/${this.tempGallery._id}`)
       .set({
         Authorization: `Bearer LOLOLOLOLOL`,
       })
@@ -332,7 +349,8 @@ describe('Gallery Routes', function() {
         if(err) console.error(err.message);
         expect(res.status).to.equal(401);
       });
-      done();
+        done();
+      });
     });
   });
 });

@@ -7,8 +7,7 @@ const User = require('../models/user');
 const superagent = require('superagent');
 const url = `http://localhost:3000`;
 const serverCtrl = require('./lib/server-controller');
-// const userTestData = require('./lib/user-testdata');
-// const galleryTestData = require('./lib/gallery-testdata');
+
 
 mongoose.Promise = Promise;
 
@@ -23,12 +22,6 @@ describe('Server Function Test', function () {
   before(serverCtrl.start);
 
   after(serverCtrl.close);
-
-  after((done) => {
-    User.remove({})
-    .then(() => done())
-    .catch(done);
-  });
 
   describe('***POST*** /api/signup route', function() {
 
@@ -60,15 +53,6 @@ describe('Server Function Test', function () {
         superagent.post(`${url}/api/signup`)
         .send({
         })
-        .end((err, res) => {
-          if(err) console.error(err.message);
-          expect(res.status).to.equal(400);
-        });
-        done();
-      });
-      it('should return a status 400 UNAUTHORIZED for no token', done => {
-        superagent.post(`${url}/api/signup`)
-        .send(testUser)
         .end((err, res) => {
           if(err) console.error(err.message);
           expect(res.status).to.equal(400);

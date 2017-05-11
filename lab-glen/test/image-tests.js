@@ -19,18 +19,20 @@ describe('Testing pic-router /api/gallery/:id/pic', function() {
   before(serverCtrl.start);
   after(serverCtrl.close);
 
-  after(done => {
-    Promise.all([
-      User.remove({}),
-      Gallery.remove({}),
-    ])
-    .then(() => done())
-    .catch(() => done());
-  });
+
 
   describe('###POST### /api/gallery/:id/pic', function() {
-    beforeEach(userTestData.bind(this));
-    beforeEach(galleryTestData.bind(this));
+
+    before(userTestData.bind(this));
+    before(galleryTestData.bind(this));
+    after(done => {
+      Promise.all([
+        User.remove({}),
+        Gallery.remove({}),
+      ])
+      .then(() => done())
+      .catch(done);
+    });
 
     it('should return a photo model', (done) => {
       superagent.post(`${url}/api/gallery/${this.tempGallery._id}/pic`)
@@ -41,9 +43,31 @@ describe('Testing pic-router /api/gallery/:id/pic', function() {
       .attach('image', `${__dirname}/lib/charmander.jpg`)
       .then(res => {
         expect(res.status).to.equal(200);
-        done();
-      })
+      });
+      done();
+    });
+  });
+
+  describe('###DELETE### /api/gallery/:id/pic', function() {
+
+    before(userTestData.bind(this));
+    before(galleryTestData.bind(this));
+    after(done => {
+      Promise.all([
+        User.remove({}),
+        Gallery.remove({}),
+      ])
+      .then(() => done())
       .catch(done);
+    });
+
+    it('should delete photo model', (done) => {
+      superagent.delete(`${url}/api/pic/${this.tempGallery._id}`)
+      .set({Authorization: `Bearer ${this.tempToken}`})
+      .then(res => {
+        expect(res.status).to.equal(204);
+      });
+      done();
     });
   });
 });
