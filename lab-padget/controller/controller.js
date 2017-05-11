@@ -3,37 +3,28 @@
 // routes call controller code.
 
 const debug = require('debug')('cfgram:auth-routes');
-const basicAuth = require('../lib/basic-auth-middleware');
 const User = require('../models/user');
+const createError = require('http-errors');
 
-module.exports = function(router) {
-  router.post('/signup', (req, res) => {
-    debug('POST /signup');
+module.exports = exports = {};
 
-    let tempPassword = req.body.password;
-    req.body.password = null;
-    delete req.body.password;
+exports.createUser = function(reqBody, tempPass){
+  debug('#createUser');
 
-    let newUser = new User(req.body);
+  let newUser = new User(reqBody);
+  // will return promise.
+  return newUser.generatePasswordHash(tempPass)
+  .then(user => user.save())
+  .then(user => user.generateToken())
+  .catch(err => createError(400, err.message));
+};
 
-    return newUser.generatePasswordHash(tempPassword)
-    .then(user => user.save())
-    .then(user => user.generateToken())
-    .then(token => res.json(token))
-    .catch(err => res.status(err.status).send(err));
-  });
-
-  router.get('/signin', basicAuth, (req, res) => {
-    debug('GET /signin');
-
-    return User.findOne({username: req.auth.username})
-    .then(user => user.comparePasswordHash(req.auth.password))
-    .then(user => user.generateToken())
-    .then(token => res.json(token))
-    // Put above in controller.
-    .catch(err => res.status(err.status).send(err));
-  });
-  return router;
+exports.fetchUser = function(reqAuth){
+  debug('fetchUser');
+  return User.findOne({username: reqAuth.username})
+  .then(user => user.comparePasswordHash(reqAuth.password))
+  .then(user => user.generateToken())
+  .catch(err => createError(err.status, err.message));
 };
 
 
