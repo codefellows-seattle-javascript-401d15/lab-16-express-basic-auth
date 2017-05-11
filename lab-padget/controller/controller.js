@@ -1,7 +1,5 @@
 'use strict';
 
-// routes call controller code.
-
 const debug = require('debug')('cfgram:auth-routes');
 const User = require('../models/user');
 const createError = require('http-errors');

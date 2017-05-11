@@ -5,6 +5,8 @@ const basicAuth = require('../lib/basic-auth-middleware');
 const authCont = require('../controller/controller');
 
 module.exports = function(router) {
+  
+
   router.post('/signup', (req, res) => {
     debug('POST /signup');
 
@@ -18,7 +20,6 @@ module.exports = function(router) {
 
     return authCont.createUser(req.body, tempPassword)
     .then(token => res.json(token))
-    // .then(token => res.send(token))
     .catch(err => res.status(err.status).send(err.message));
   });
 
