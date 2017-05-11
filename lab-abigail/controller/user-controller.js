@@ -6,7 +6,7 @@ const User = require('../model/user');
 
 module.exports = exports = {};
 
-exports.createItem = function(req, res, user) {
+exports.createItem = function(req, user) {
 
   if(!user) return Promise.reject(createError(400, 'bad request'));
 
@@ -18,20 +18,14 @@ exports.createItem = function(req, res, user) {
 
   return newUser.generatePasswordHash(tempPassword)
   .then(user => user.save())
-  .then(user => user.generateToken())
-  .then(token => res.json(token))
-  .catch(err => {
-    console.log(err);
-  });
+  .then(user => user.generateToken());
 };
 
-exports.fetchItem = function(res, reqAuth) {
+exports.fetchItem = function(reqAuth) {
 
   if(!reqAuth) return Promise.reject(createError(404, 'not found'));
 
   return User.findOne({username: reqAuth.username})
   .then(user => user.comparePasswordHash(reqAuth.password))
-  .then(user => user.generateToken())
-  .then(data => res.json(data))
-  .catch(err => Promise.reject(err));
+  .then(user => Promise.resolve(user.generateToken()));
 };
