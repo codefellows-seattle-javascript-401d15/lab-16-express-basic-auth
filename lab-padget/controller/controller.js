@@ -16,7 +16,7 @@ exports.createUser = function(reqBody, tempPass){
   return newUser.generatePasswordHash(tempPass)
   .then(user => user.save())
   .then(user => user.generateToken())
-  .catch(err => createError(400, err.message));
+  .catch(err => createError(401, err.message));
 };
 
 exports.fetchUser = function(reqAuth){
@@ -24,7 +24,7 @@ exports.fetchUser = function(reqAuth){
   return User.findOne({username: reqAuth.username})
   .then(user => user.comparePasswordHash(reqAuth.password))
   .then(user => user.generateToken())
-  .catch(err => createError(err.status, err.message));
+  .catch(err => createError(401, err.message));
 };
 
 

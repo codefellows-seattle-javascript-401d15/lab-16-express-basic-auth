@@ -12,10 +12,8 @@ describe('Server module', function() {
   describe('#POST', function() {
     after(done => {
       User.findOne({username: 'mp'})
-      // user.remove();
       .then(user => {
         User.findByIdAndRemove(user._id)
-        // User.findOne({username: 'mp'})
         .then(() => done());
       });
     });
@@ -26,7 +24,7 @@ describe('Server module', function() {
         .post('/api/signup')
         .send({username: 'mp', email: 'mp@michaelpadget.com', password: 'testing'})
         .end((err, res) => {
-          expect(res).to.have.status(200);
+          expect(res.status).to.equal(200);
           done();
         });
       });
@@ -34,9 +32,8 @@ describe('Server module', function() {
       it('should respond with status 400 on a bad request', done => {
         chai.request(server)
         .post('/api/signup')
-        .send()
+        .send({username: 'bad', email: 'bad', password: 'bad'})
         .end((err, res) => {
-          // expect(res).to.have.status(401);
           expect(res).to.have.status(400);
           done();
         });
