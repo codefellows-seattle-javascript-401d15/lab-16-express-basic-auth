@@ -32,7 +32,7 @@ describe('Server module', function() {
       it('should respond with status 400 on a bad request', done => {
         chai.request(server)
         .post('/api/signup')
-        .send({username: 'bad', email: 'bad', password: 'bad'})
+        .send()
         .end((err, res) => {
           expect(res).to.have.status(400);
           done();
@@ -70,7 +70,7 @@ describe('Server module', function() {
       it('should respond with status 401 on a bad request', done => {
         chai.request(server)
         .get('/api/signin')
-        .auth('mp', 'bad-request')
+        .auth('bad', 'bad-request')
         .end((err, res) => {
           expect(res).to.have.status(401);
           done();

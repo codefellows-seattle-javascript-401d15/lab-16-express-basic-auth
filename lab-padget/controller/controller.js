@@ -10,9 +10,8 @@ module.exports = exports = {};
 
 exports.createUser = function(reqBody, tempPass){
   debug('#createUser');
-
   let newUser = new User(reqBody);
-  // will return promise.
+
   return newUser.generatePasswordHash(tempPass)
   .then(user => user.save())
   .then(user => user.generateToken())
@@ -20,14 +19,13 @@ exports.createUser = function(reqBody, tempPass){
 };
 
 exports.fetchUser = function(reqAuth){
-  debug('fetchUser');
+  debug('#fetchUser');
+
   return User.findOne({username: reqAuth.username})
   .then(user => user.comparePasswordHash(reqAuth.password))
   .then(user => user.generateToken())
-  .catch(err => createError(401, err.message));
+  .catch(err => err.status().send(err));
 };
-
-
 
 
 

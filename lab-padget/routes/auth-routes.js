@@ -27,7 +27,7 @@ module.exports = function(router) {
 
     return authCont.fetchUser(req.auth)
     .then(data => res.json(data))
-    .catch(err => res.status(400).send(err.message));
+    .catch(err => res.status(401).send(err.message));
   });
   return router;
 };
