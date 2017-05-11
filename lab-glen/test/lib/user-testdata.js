@@ -14,7 +14,6 @@ module.exports = function(done) {
   .then(user => user.save())
   .then(user => {
     this.tempUser = user;
-    console.log(`user : ${user}`);
     return user.generateToken();
   })
   .then(token => {
