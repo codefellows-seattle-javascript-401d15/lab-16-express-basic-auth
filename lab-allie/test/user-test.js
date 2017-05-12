@@ -1,40 +1,94 @@
 'use strict';
 
-const server = require('../server.js');
 const chai = require('chai');
 const expect = chai.expect;
+// const request = require('superagent');
+const mongoose = require('mongoose');
 const http = require('chai-http');
-// const Promise = require('bluebird');
+const Promise = require('bluebird');
 
+const User = require('../models/user.js');
+
+const server = require('../server.js');
 chai.use(http);
 
-describe('User route tests', function () {
-  let app;
-  before(done => {
-    app = server.listen(8000);
-    done();
-  });
+const testUser = {
+  username: 'testy',
+  password: 'abc123',
+  email: 'fake@fake.com',
+};
 
-  describe('POST method', function() {
-    describe('create a new user', function() {
-      it('should create a new user entry', done => {
-        chai.request(server)
-        .post('/api/signup')
-        .send({'username': 'allie', 'email': 'agrampa@yahoo.com', 'password': 'zeepassword'})
-        .end((err, res) => {
-          if (err) console.error('oh no!', err);
-          console.log('res.auth', res.auth);
-          expect(res.body.username).to.equal('allie');
-          done();
-        });
+mongoose.Promise = Promise;
+
+describe('User auth routes', function() {
+  afterEach(done => {
+    Promise.all([
+      User.remove({}),
+    ])
+    .then(() => done())
+    .catch(() => done());
+  });
+  
+  describe('Unregistered route', function() {
+    it('should throw a 404 error', done => {
+      chai.request(server)
+      .post('/api')
+      .send(testUser)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        done();
       });
     });
   });
   
-  describe('GET method', function() {});
+  describe('POST tests', function() {
+    it('should create a new user', done => {
+      chai.request(server)
+      .post('/api/signup')
+      .send(testUser)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        done();
+      });
+    });
+    
+    it('should throw a 400 error if given no body', done => {
+      chai.request(server)
+      .post('/api/signup')
+      .send('')
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        done();
+      });
+    });
+  });
   
-  after(done => {
-    app.close();
-    done();
+  describe('GET tests', function() {
+    before(done => {
+      chai.request(server)
+      .post('/api/signup')
+      .send(testUser)
+      .end(() => done());
+    });
+    
+    
+    it('should return the user if given the correct credentials', done => {
+      chai.request(server)
+      .get('/api/signin')
+      .auth(testUser.username, testUser.password)
+      .end(() => {        
+        done();
+      });
+    });
+    
+    it('should return the user if given the correct credentials', done => {
+      chai.request(server)
+      .get('/api/signin')
+      .auth('')
+      .end((err, res) => {        
+        expect(res.status).to.equal(401);
+        done();
+      });
+    });
   });
 });
