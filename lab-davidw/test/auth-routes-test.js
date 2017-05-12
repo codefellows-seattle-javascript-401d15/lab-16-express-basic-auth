@@ -10,7 +10,6 @@ const Promise = require('bluebird');
 
 mongoose.Promise = Promise;
 
-// const url = `http://localhost:${process.env.PORT}`;
 
 const sampleUser = {
   username: 'testUser',
