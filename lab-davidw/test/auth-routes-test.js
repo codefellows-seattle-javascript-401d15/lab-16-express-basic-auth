@@ -10,7 +10,6 @@ const Promise = require('bluebird');
 
 mongoose.Promise = Promise;
 
-
 const sampleUser = {
   username: 'testUser',
   password: '1234',
