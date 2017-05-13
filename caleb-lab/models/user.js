@@ -14,7 +14,7 @@ const userSchema = Schema({
   username: {type: String, required: true, unique: true},
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true},
-  findhash: {type: String, unique: true},
+  findHash: {type: String, unique: true},
 });
 
 userSchema.methods.generatePasswordHash = function(password){
@@ -49,12 +49,12 @@ userSchema.methods.generateFindHash = function(){
     let tries = 0;
 
     let _generateFindHash = () => {
-      this.findhash = crypto.randomBytes(32).toString('hex');
+      this.findHash = crypto.randomBytes(32).toString('hex');
       this.save()
-      .then(() => resolve(this.findhash))
-      .catch(err => {//potentially need err as a single param here. doubtful, since wwe don't use it.
+      .then(() => resolve(this.findHash))
+      .catch(err => {
         console.log(err);
-        if(tries > 3) return reject(createError(401, 'Generate findhash failed.'));
+        if(tries > 3) return reject(createError(401, 'Generate findHash failed.'));
         tries ++;
         _generateFindHash();
       });

@@ -3,30 +3,24 @@
 const debug = require('debug')('cfgram:auth-routes');
 const basicAuth = require('../lib/basic-auth-middleware.js');
 const User = require('../models/user.js');
+const userCtrl = require('../controllers/user-controller.js');
 
 module.exports = function(router){
   router.post('/signup', (req, res) => {
     debug('POST /signup');
 
     let tempPassword = req.body.password;
-    req.body.password = null; //this is an extra option to destroy the req.body.password data
+    req.body.password = null;
     delete req.body.password;
-
-    let user = new User(req.body);
-
-    user.generatePasswordHash(tempPassword)
-    .then(user => user.save())
-    .then(user => user.generateToken())
+    userCtrl.createUser(req.body, tempPassword)
     .then(token => res.json(token))
-    .catch(err => res.status(err.status).send(err));
+    .catch(err => res.status(404).send(err));
   });
 
   router.get('/signin', basicAuth, (req, res) => {
     debug('GET /signin');
 
-    User.findOne({username: req.auth.username})
-    .then(user => user.comparePasswordHash(req.auth.password))
-    .then(user => user.generateToken())
+    return userCtrl.fetchUser(req.auth)
     .then(token => res.json(token))
     .catch(err => res.status(400).send(err));
   });

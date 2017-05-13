@@ -4,7 +4,7 @@
     "comma-dangle": ["error", "always-multiline"],
     "no-console": "off",
     "indent": [ "error", 2 ],
-    "semi": ["error", "always"],
+    "semi": [0],
     "linebreak-style": [ "error", "unix" ]
   },
   "env": {
