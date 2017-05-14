@@ -8,7 +8,7 @@ module.exports = exports = {};
 
 exports.createItem = function(req, user) {
 
-  if(!user) return Promise.reject(createError(400, 'bad request'));
+  if(!user) return Promise.reject(createError(400, 'Bad Request'));
 
   let tempPassword = req.body.password;
   req.body.password = null;
@@ -23,7 +23,7 @@ exports.createItem = function(req, user) {
 
 exports.fetchItem = function(reqAuth) {
 
-  if(!reqAuth) return Promise.reject(createError(404, 'not found'));
+  if(!reqAuth) return Promise.reject(createError(404, 'User not found'));
 
   return User.findOne({username: reqAuth.username})
   .then(user => user.comparePasswordHash(reqAuth.password))

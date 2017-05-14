@@ -18,7 +18,6 @@ const exampleUser = {
   email: 'exampleuser@test.com',
 };
 
-
 const invalidUser = {
   username: 'exampleuser',
   email: 'exampleuser@test.com',
@@ -38,19 +37,16 @@ describe('Auth Routes', function() {
         .send(exampleUser)
         .end((err, res) => {
           if (err) return done(err);
-          console.log('\ntoken:', res.text, '\n');
           expect(res.status).to.equal(200);
           expect(res.text).to.be.a('string');
           done();
         });
       });
 
-      it.only('should return a 401 on an incomplete request', done => {
+      it('should return a 401 on an incomplete request', done => {
         request.post(`${url}/api/signup`)
         .send(invalidUser)
         .end(res => {
-          console.log(res.status);
-          console.log('\ntoken:', res.text, '\n');
           expect(res.status).to.equal(401);
           done();
         });
