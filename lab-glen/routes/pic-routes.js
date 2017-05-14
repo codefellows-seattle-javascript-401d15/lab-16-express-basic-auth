@@ -16,10 +16,17 @@ module.exports = function(router) {
     .catch(err => res.send(err));
   });
 
+  router.get('/pic/:id', bearerAuth, (req, res) => {
+    debug('#get route');
+    picController.fetchPic(req)
+    .then(() => res.sendStatus(201), console.log('Pic get success'))
+    .catch(err => res.status(err.status).send(err.message));
+  });
+
   router.delete('/pic/:id', bearerAuth, (req, res) => {
     debug('#route delete pic');
 
-    picController.deletePic(req.params.id)
+    picController.deletePic(req)
     .then(() => res.sendStatus(204), console.log('Pic Delete successful'))
     .catch(err => res.status(err.status).send(err.message));
   });
