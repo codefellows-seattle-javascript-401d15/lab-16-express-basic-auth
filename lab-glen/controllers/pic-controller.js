@@ -54,25 +54,34 @@ exports.createPic = function(req) {
    });
 };
 
-exports.deletePic = function(picId) {
+exports.fetchPic = function(req) {
+  debug('#get pic');
+
+  return Pic.findById(req.params.id)
+  .then(image => {
+    return Promise.resolve(image);
+
+  })
+  .catch(() => Promise.reject(createError(404, 'Image not found')));
+};
+
+exports.deletePic = function(req) {
   debug('#deletePic');
 
-  console.log(picId);
-  if(!picId) return createError(400, 'Bad request');
+  let params = {};
 
-  return Pic.findByIdAndRemove(picId)
-  .then(pic => {
-    console.log('whats the pic?' + pic);
-    let params = {
+  return Pic.findById(req.params.id)
+  .then(image => {
+
+    params = {
       Bucket: process.env.AWS_BUCKET,
-      Key: pic.objectKey,
+      Key: image.objectKey,
     };
-    console.log('params ' + params);
-    console.log('is the key still here?' + pic.objectKey);
-    return s3.deleteObject(params);
   })
- .then(params => s3.deleteObject(params))
- .then(pic => Promise.resolve(pic))
- .catch(() => Promise.reject(createError(404, 'PIC Not found')));
-
+  .then(() => s3.deleteObject(params))
+  .then(data => {
+    console.log(`data ${data}`);
+    return Pic.findByIdAndRemove(req.params.id);
+  })
+  .catch(err => Promise.reject(createError(404, err.message)));
 };

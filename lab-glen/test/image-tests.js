@@ -9,6 +9,8 @@ const User = require('../models/user');
 const Gallery = require('../models/gallery');
 const userTestData = require('./lib/user-testdata');
 const galleryTestData = require('./lib/gallery-testdata');
+const picTestData = require('./lib/pic-test');
+const Pic = require('./models/pic');
 
 const url = `http://localhost:${process.env.PORT}`;
 
@@ -18,8 +20,6 @@ describe('Testing pic-router /api/gallery/:id/pic', function() {
 
   before(serverCtrl.start);
   after(serverCtrl.close);
-
-
 
   describe('###POST### /api/gallery/:id/pic', function() {
 
@@ -52,17 +52,19 @@ describe('Testing pic-router /api/gallery/:id/pic', function() {
 
     before(userTestData.bind(this));
     before(galleryTestData.bind(this));
+    before(picTestData.bind(this));
     after(done => {
       Promise.all([
         User.remove({}),
         Gallery.remove({}),
+        Pic.remove({}),
       ])
       .then(() => done())
       .catch(done);
     });
 
-    it('should delete photo model', (done) => {
-      superagent.delete(`${url}/api/pic/${this.tempGallery._id}`)
+    it('should delete a photo model', (done) => {
+      superagent.delete(`${url}/api/pic/${this.tempImage._id}`)
       .set({Authorization: `Bearer ${this.tempToken}`})
       .then(res => {
         expect(res.status).to.equal(204);
