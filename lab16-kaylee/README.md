@@ -1,138 +1,60 @@
-## Lab 16: Double Resource Express/MongoDB API
+## Lab 16: Express Basic Auth
 
 ## About This Project
 
 * Build an HTTP server using the Express Node module.
-* Create two models (Dog and Toy) with a one-to-many relationship, used to produce instances of resources.
-* Create two controller to manage GET, POST, PUT and DELETE requests to specific routes.
-* Store Dog records (and corresponding Toy records) in Mongo DB.
+* Create a User model to represent DogGram users.
+* Create a controller to manage GET and POST requests to respective routes.
+* Store User records in Mongo DB.
+* Implement basic authentication to ensure users only have access to their own accounts.
 
 ## Using This Project
 
 * Assuming MongoDB installed:
   * Fork and clone this repository.
-  * Navigate to lab14-kaylee directory.
+  * Navigate to lab16-kaylee directory.
   * Install necessary NPM packages (see dependencies below).
-  * Create a new DB in Mongo by making a POST request to the Dog post route (see example requests below). The new DB should show up as "dogToysDB".
-  * Manipulate Dog and Toy records by making GET, POST, PUT and DELETE requests to different routes (again, see below).
+  * Create a new DB in Mongo by making a POST request to the /api/signup route (see example requests below). The new DB should show up as "doggramDB".
+  * Add and retrieve User records by making GET and POST requests to different respective routes (again, see below).
 
 ## Project Dependencies
 
+* npm install -S bcrypt
 * npm install -S bluebird
 * npm install -S body-parser
-* npm install -S chai
-* npm install -S chai-http
+* npm install -S cors
+* npm install -S coveralls
+* npm install -S crypto
+* npm install -S debug
+* npm install -S dotenv
 * npm install -S eslint
 * npm install -S express
+* npm install -S http-errors
+* npm install -S istanbul
+* npm install -S jsonwebtoken
+* npm install -S mocha-lcov-reporter
 * npm install -S mongoose
 * npm install -S morgan
 
 ## Developer Dependencies
 
 * npm install -D mocha
+* npm install -D chai
+* npm install -D chai-http
 
 ## Making HTTP Requests
 
-### Dog Requests
-
-* Example GET request (single Dog)
-  * In terminal (assuming httPie installed): http get :3000/api/dog/someID
-  * Expected output:
-    {
-      "__v": 0,
-      "_id": "someID",
-      "breed": "requestedBreed",
-      "name": "requestedName"
-    }
-  * Expected status code: 200
-
 * Example POST request
-  * In terminal (assuming httPie installed): http post :3000/api/dog name="Joe Joe" breed="bichon frise"
-  * Expected output:
-    {
-      "__v": 0,
-      "_id": "someID",
-      "breed": "bichon frise",
-      "name": "Joe Joe"
-    }
+  * In terminal (assuming httPie installed): http post :3000/api/signup username=kaymay1000 password=secret email=kay@kay.com
+  * Expected output: a user token
   * Expected status code: 200
-  * Should populate Mongo DB with new Dog record
+  * Should populate Mongo DB with new User record
 
-* Example PUT request
-  * In terminal (assuming httPie installed): http put :3000/api/dog/someID name="newName" breed="newBreed"
-  * Expected output:
-    {
-      "__v": 0,
-      "_id": "someID",
-      "breed": "newBreed",
-      "name": "newName"
-    }
+* Example GET request
+  * In terminal (assuming httPie installed): http :3000/api/signin -a <username>:<password>
+  * Expected output: a user token
   * Expected status code: 200
-  * Should update existing Dog record (as specified by ID) in Mongo DB with new name and breed properties
-
-* Example DELETE request
-  * In terminal (assuming httPie installed): http delete :3000/api/dog/someID
-  * Expected output:
-  {
-    "__v": 0,
-    "_id": "someID",
-    "breed": "deletedBreed",
-    "name": "deletedName"
-  }
-
-  * Expected status code: 200
-  * Should delete Dog record (as specified by ID) from Mongo DB
-
-### Toy Requests
-
-* Example GET request (single Toy)
-  * In terminal (assuming httPie installed): http get :3000/api/toy/someToyID
-  * Expected output:
-    {
-      "__v": 0,
-      "_id": "someID",
-      "type": "requestedType",
-      "color": "requestedColor"
-    }
-  * Expected status code: 200
-
-* Example POST request
-  * In terminal (assuming httPie installed): http post :3000/api/dog name="Joe Joe  "type="bichon frise"
-  * Expected output:
-    {
-      "__v": 0,
-      "_id": "someID",
-      "type": "bichon frise",
-      "name": "Joe Joe"
-    }
-  * Expected status code: 200
-  * Should populate Mongo DB with new Dog record
-
-* Example PUT request
-  * In terminal (assuming httPie installed): http put :3000/api/dog/someID name="newName"  type="newBreed"
-  * Expected output:
-    {
-      "__v": 0,
-      "_id": "someID",
-      "type": "newBreed",
-      "name": "newName"
-    }
-  * Expected status code: 200
-  * Should update existing Dog record (as specified by ID) in Mongo DB with new name an type properties
-
-* Example DELETE request
-  * In terminal (assuming httPie installed): http delete :3000/api/dog/someID
-  * Expected output:
-  {
-    "__v": 0,
-    "_id": "someID",
-    "type": "deletedBreed",
-    "name": "deletedName"
-  }
-
-  * Expected status code: 200
-  * Should delete Dog record (as specified by ID) from Mongo DB
 
 ## Biggest Roadblocks
 
-* Integration tests-- figuring out how to refactor tests from previous lab to accommodate for MongoDB's "_id" property (vs. uuid's plain "id" property).
+* Testing for a 200 status code to /api/signup route! (Still isn't passing as is...)
