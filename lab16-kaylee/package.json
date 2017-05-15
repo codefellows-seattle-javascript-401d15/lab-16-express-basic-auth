@@ -31,8 +31,10 @@
   "scripts": {
     "test": "mocha",
     "start": "node server.js",
-    "watch": "nodemon server.js",
-    "lint": "eslint /**"
+    "debug": "DEBUG=doggram* nodemon server.js",
+    "lint": "eslint /**",
+    "cover": "istanbul cover _mocha",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info"
   },
   "author": "Kaylee Alvarado",
   "license": "MIT"
