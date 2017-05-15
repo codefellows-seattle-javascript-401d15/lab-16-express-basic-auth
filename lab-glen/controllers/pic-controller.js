@@ -16,7 +16,7 @@ module.exports = exports = {};
 AWS.config.setPromisesDependency(require('bluebird'));
 
 function s3UploadProm(params) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     s3.upload(params, (err, data) => {
       resolve(data);
     });
