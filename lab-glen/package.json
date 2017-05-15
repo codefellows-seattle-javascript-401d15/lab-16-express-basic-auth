@@ -24,6 +24,7 @@
     "body-parser": "^1.17.1",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.3",
+    "coveralls": "^2.13.1",
     "debug": "^2.6.6",
     "del": "^2.2.2",
     "dotenv": "^4.0.0",
