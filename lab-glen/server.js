@@ -5,7 +5,6 @@ require('dotenv').load();
 const morgan = require('morgan');
 const express = require('express');
 const cors = require('cors');
-const debug = require('debug')('cfgram:server');
 const Promise = require('bluebird');
 const errorHandler = require('./lib/error-middleware');
 const bodyParser = require('body-parser').json();
