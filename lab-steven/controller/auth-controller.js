@@ -2,7 +2,6 @@
 
 const debug = require('debug')('cfgram: auth-controller');
 const User = require('../model/user');
-const Promise = require('bluebird');
 
 module.exports = exports = {};
 
@@ -12,7 +11,7 @@ exports.createUser = function(reqBody, tempPw){
   let newUser = new User(reqBody);
   return newUser.genPassHash(tempPw)
   .then(user => user.save())
-  .then(user => Promise.resolve(user.genToken()))
+  .then(user => user.genToken())
   .catch(err => Promise.reject(err));
 };
 
@@ -21,6 +20,6 @@ exports.fetchUser = function(reqAuth){
 
   return User.findOne({username: reqAuth.username})
   .then(user => user.compareHash(reqAuth.password))
-  .then(user => Promise.resolve(user.genToken()))
+  .then(user => user.genToken())
   .catch(err => Promise.reject(err));
 };

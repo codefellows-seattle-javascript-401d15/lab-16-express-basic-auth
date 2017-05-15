@@ -1,10 +1,8 @@
 'use strict';
 
 const debug = require('debug')('cfgram: authRoutes');
-const basicAuth = require('../lib/auth-middleware');
-// const User = require('../model/user');
+const basicAuth = require('../lib/basic-auth-middleware');
 const authCtrlr = require('../controller/auth-controller');
-// const Promise = require('bluebird');
 
 module.exports = function(router){
   router.post('/signup', (req, res) => {
