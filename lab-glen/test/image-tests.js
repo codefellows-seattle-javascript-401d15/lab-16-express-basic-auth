@@ -10,7 +10,7 @@ const Gallery = require('../models/gallery');
 const userTestData = require('./lib/user-testdata');
 const galleryTestData = require('./lib/gallery-testdata');
 const picTestData = require('./lib/pic-test');
-const Pic = require('./models/pic');
+const Pic = require('../models/pic');
 
 const url = `http://localhost:${process.env.PORT}`;
 
@@ -29,6 +29,7 @@ describe('Testing pic-router /api/gallery/:id/pic', function() {
       Promise.all([
         User.remove({}),
         Gallery.remove({}),
+        Pic.remove({}),
       ])
       .then(() => done())
       .catch(done);

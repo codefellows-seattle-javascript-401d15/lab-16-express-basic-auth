@@ -50,11 +50,11 @@ describe('Gallery Routes', function() {
         done();
       }).catch(() => done());
     });
-
-    after((done) => {
-      delete exampleGallery.userId;
-      done();
-    });
+    //
+    // after((done) => {
+    //   delete exampleGallery.userId;
+    //   done();
+    // });
 
     it('should return a gallery', done => {
       superagent.post(`${url}/api/gallery`)
@@ -213,8 +213,6 @@ describe('Gallery Routes', function() {
       }).catch(() => done());
     });
 
-
-
     before(done => {
       console.log('this.TEMPUSER ' + this.tempUser);
       console.log('examplegallery.userid ' + exampleGallery.userId);
@@ -231,7 +229,6 @@ describe('Gallery Routes', function() {
 
     after(() => {
       delete exampleGallery.userId;
-
     });
 
     it('should return a status 404 for invalid route', done => {
