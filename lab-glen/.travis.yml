@@ -1,24 +1,24 @@
 language: node_js
-  node_js:
-    - 'stable'
-  services:
-    - mongodb
-  addons:
-    apt:
-      sources:
-        - ubuntu-toolchain-r-test
-      packages:
-        - gcc-4.8
-        - g++-4.8
-  env:
-    - CXX=g++-4.8
-  sudo: required
-
-  branches:
-    only:
-      -master
-      -test_branch
-  before_script: npm i
-  script:
-    - npm test
+node_js:
+  - 'stable'
+services:
+  - mongodb
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-5
+      - g++-5
+env:
+  - CXX=g++-5
+sudo: required
+# safelist
+branches:
+  only:
+  - master
+  - staging
+before_script: npm i
+script:
+  - npm run test
  
