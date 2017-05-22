@@ -13,6 +13,7 @@ language: node_js
   env:
     - CXX=g++-4.8
   sudo: required
+
   branches:
     only:
       -master
@@ -20,3 +21,7 @@ language: node_js
   before_script: npm i
   script:
     - npm test
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 270e337f4cf2977807d07564c69990cb4f2fe312
