@@ -19,9 +19,7 @@ describe('USER ROUTES', function() {
       .send({ emailAddress:'test@moose.com', username: 'moose', password:'123'})
       .end((err, res) => {
         expect(res.status).to.equal(201);
-        expect(res).to.have.property('text')
-          .that.is.a('string')
-          .that.matches(/[A-Za-z0-9\-\._~\+\/]+=*/g);
+        expect(res.body).to.match(/[A-Za-z0-9\-\._~\+\/]+=*/g);
         done();
       });
     });
@@ -75,9 +73,7 @@ describe('USER ROUTES', function() {
         expect(res).to.have.property('status')
           .that.is.a('number')
           .that.equals(200);
-        expect(res).to.have.property('text')
-          .that.is.a('string')
-          .that.matches(/[A-Za-z0-9\-\._~\+\/]+=*/g);
+        expect(res.body).to.match(/[A-Za-z0-9\-\._~\+\/]+=*/g);
         done();
       });
     });
