@@ -3,7 +3,6 @@ Small Node.js App for Codefellows Coding Bootcamp.
 
 Sign up to account that doesn't do anything. Using Mongo.
 
-
 ##Installation:
 
 1. clone this repository and ``cd`` into it
