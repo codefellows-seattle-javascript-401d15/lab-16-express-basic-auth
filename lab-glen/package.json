@@ -1,0 +1,26 @@
+{
+  "name": "lab-glen",
+  "version": "1.0.0",
+  "description": "![cf](https://i.imgur.com/7v5ASc8.png) lab 16 express basic authorization ======",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "debug": "DEBUG=cfgram* nodemon server.js",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "jsonwebtoken": "^7.4.0",
+    "mocha": "^3.3.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "cookie-parser": "^1.4.3",
+    "debug": "^2.6.6",
+    "dotenv": "^4.0.0",
+    "jade": "^1.11.0",
+    "morgan": "^1.8.1"
+  }
+}
