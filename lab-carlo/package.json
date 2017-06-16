@@ -1,0 +1,32 @@
+{
+  "name": "lab-carlo",
+  "version": "1.0.0",
+  "description": "lab 16",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Carlo",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.1",
+    "cors": "^2.8.3",
+    "crypto": "0.0.3",
+    "debug": "^2.6.6",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "jsonwebtoken": "^7.4.0",
+    "mongoose": "^4.9.8"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.3.0"
+  }
+}
