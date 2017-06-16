@@ -2,7 +2,6 @@
 
 const chai = require('chai');
 const expect = chai.expect;
-// const request = require('superagent');
 const mongoose = require('mongoose');
 const http = require('chai-http');
 const Promise = require('bluebird');
@@ -48,16 +47,6 @@ describe('User auth routes', function() {
       .send(testUser)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        done();
-      });
-    });
-    
-    it('should throw a 400 error if given no body', done => {
-      chai.request(server)
-      .post('/api/signup')
-      .send('')
-      .end((err, res) => {
-        expect(res.status).to.equal(400);
         done();
       });
     });
