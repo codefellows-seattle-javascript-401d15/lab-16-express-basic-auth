@@ -4,7 +4,7 @@ require('dotenv').load()
 
 const express = require('express')
 const cors = require('cors')
-const debug = require('debug')('cfgram:server')
+const debug = require('debug')('cfgram:server')//eslint-disable-line
 const Promise = require('bluebird')
 const errorHandler = require('./lib/error-middleware')
 const authRoutes = require('./routes/auth-routes')
