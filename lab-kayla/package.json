@@ -1,0 +1,24 @@
+{
+  "name": "lab-16-express-basic-auth",
+  "version": "1.0.0",
+  "description": "![cf](https://i.imgur.com/7v5ASc8.png) lab 16 express basic authorization\r ======",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kdasay16/lab-16-express-basic-auth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kdasay16/lab-16-express-basic-auth/issues"
+  },
+  "homepage": "https://github.com/Kdasay16/lab-16-express-basic-auth#readme"
+}
